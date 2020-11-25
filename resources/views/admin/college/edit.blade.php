@@ -58,6 +58,24 @@
 		    		</div>
 		    		<div class="col-6">
 		    			<div class="form-group">
+				    		<label for="pass_percent">Pass Percent</label>
+				    		<input value="{{$college->pass_percent}}" type="text" name="pass_percent" id="pass_percent" placeholder="Eg: 50" class="form-control">
+				    	</div>
+		    		</div>
+		    		<div class="col-6">
+		    			<div class="form-group">
+				    		<label for="extra_activities">No Of Extra Curriculum Activities</label>
+				    		<input value="{{$college->extra_activities}}" type="text" name="extra_activities" id="extra_activities" placeholder="Eg: 5" class="form-control">
+				    	</div>
+		    		</div>
+		    		<div class="col-6">
+		    			<div class="form-group">
+				    		<label for="placements">Avg Placement (Placements/no of batch)</label>
+				    		<input value="{{$college->placements}}" type="text" name="placements" id="placements" placeholder="Eg: 500" class="form-control">
+				    	</div>
+		    		</div>
+		    		<div class="col-6">
+		    			<div class="form-group">
 				    		<label for="email">E-Mail Address</label>
 				    		<input value="{{ $college->email }}" type="text" name="email" id="email" placeholder="Eg: contact@college.com" class="form-control">
 				    	</div>
