@@ -9,6 +9,9 @@
     		<h2>
 		  		<a href="/college/{{$college->id}}">{{ $college->name }}</a>
 		  	</h2>
+		  	@auth
+		  		<a class="btn btn-success" href="/favorite/{{$college->id}}">❤️ @if($favorite) Remove From @else Add To @endif Favorite</a>
+		  	@endauth
 		  	<hr>
 		  	<div style="font-size: 20px">
 			    	<strong>Affiliation: {{ $college->affiliation->name }}</strong><br>

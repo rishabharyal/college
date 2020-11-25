@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index');
 Route::get('/college/{id}', 'HomeController@showCollege');
 Route::get('/colleges', 'HomeController@showAllColleges');
+Route::get('/favorites', 'FavoriteController@index')->middleware('auth');
+Route::get('/favorite/{id}', 'FavoriteController@add')->middleware('auth');
 
 Auth::routes();
 

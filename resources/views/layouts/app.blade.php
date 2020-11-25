@@ -63,7 +63,7 @@
                                             <strong>➡️ Open Admin Panel</strong>
                                         </a>
                                     @endif
-                                    <a class="dropdown-item" href="/admin">
+                                    <a class="dropdown-item" href="/favorites">
                                         ❤️ Favorites
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
