@@ -9,6 +9,7 @@ use App\Models\Favorite;
 use App\Models\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -19,6 +20,12 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+    }
+
+    public function rankColleges() {
+        $colleges = College::orderByRaw('((`colleges`.`pass_percent`*0.3)+(`colleges`.`extra_activities`*0.2)+(`colleges`.`placements`*0.5)) DESC')->get();
+
+        return view('ranks', compact('colleges'));
     }
 
     public function showCollege($id) {

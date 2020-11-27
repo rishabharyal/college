@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Affiliation;
 use App\Models\Faculty;
+use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
@@ -16,7 +17,8 @@ class FacultyController extends Controller
     public function index()
     {
         $faculties = Faculty::all();
-        return view('admin.faculty.index', compact('faculties'));
+        $affiliations = Affiliation::all();
+        return view('admin.faculty.index', compact('faculties','affiliations'));
     }
 
     /**
@@ -38,10 +40,12 @@ class FacultyController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'affiliation_id' => 'required|exists:affiliations,id'
         ]);
 
         $faculty = new Faculty();
+        $faculty->affiliation_id = $request->get('affiliation_id');
         $faculty->name = $request->get('name');
         $faculty->description = $request->get('description');
         $faculty->save();
@@ -69,11 +73,12 @@ class FacultyController extends Controller
     public function edit($id)
     {
         $faculty = Faculty::find($id);
+        $affiliations = Affiliation::all();
         if (!$faculty) {
             return redirect()->back()->with('message', 'The faculty you wanted to edit does not exist anymore.');
         }
 
-        return view('admin.faculty.edit', compact('faculty'));
+        return view('admin.faculty.edit', compact('faculty', 'affiliations'));
     }
 
     /**
@@ -86,7 +91,8 @@ class FacultyController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'affiliation_id' => 'required|exists:affiliations,id',
         ]);
 
         $faculty = Faculty::find($id);
@@ -95,6 +101,7 @@ class FacultyController extends Controller
         }
 
         $faculty->name = $request->get('name');
+        $faculty->affiliation_id = $request->get('affiliation_id');
         $faculty->description = $request->get('description');
         $faculty->save();
 

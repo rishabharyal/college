@@ -10,7 +10,7 @@ class College extends Model
     use HasFactory;
 
     public function affiliation() {
-    	return $this->belongsTo(Affiliation::class);
+    	return $this->faculty->affiliation();
     }
 
     public function level() {

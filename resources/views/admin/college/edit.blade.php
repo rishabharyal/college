@@ -104,19 +104,8 @@
 		    		</div>
 		    		<div class="col-6">
 		    			<div class="form-group">
-				    		<label for="affiliation_id">Affiliation</label>
-				    		<select class="form-control" name="affiliation_id" id="affiliation_id">
-				    			<option disabled="">Select Affiliation</option>
-				    			@foreach($affiliations as $affiliation)
-				    				<option {{ $affiliation->id == $college->affiliation_id ? 'selected' : '' }} value="{{ $affiliation->id }}">{{ $affiliation->name }}</option>
-				    			@endforeach
-				    		</select>
-				    	</div>
-		    		</div>
-		    		<div class="class-6">
-		    			<div class="form-group">
 		    				<label for="logo">Select Logo</label>
-		    				<input class="form-control" style="width: 100%" type="file" name="logo" id="logo" placeholder="Select Logo">
+		    				<input class="form-control" type="file" name="logo" id="logo" placeholder="Select Logo">
 		    			</div>
 		    		</div>
 		    	</div>

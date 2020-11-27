@@ -21,11 +21,10 @@ class CollegeController extends Controller
     {
         $levels = Level::all();
         $faculties = Faculty::all();
-        $affiliations = Affiliation::all();
         $colleges = College::all();
 
 
-        return view('admin.college.index', compact('levels', 'faculties', 'affiliations', 'colleges'));
+        return view('admin.college.index', compact('levels', 'faculties', 'colleges'));
     }
 
     /**
@@ -55,7 +54,6 @@ class CollegeController extends Controller
             'email' => 'required',
             'faculty_id' => 'required',
             'level_id' => 'required',
-            'affiliation_id' => 'required',
         ]);
 
 
@@ -93,12 +91,11 @@ class CollegeController extends Controller
         $college = College::find($id);
         $levels = Level::all();
         $faculties = Faculty::all();
-        $affiliations = Affiliation::all();
         if (!$college) {
             return redirect()->back()->with('message', 'The college you wanted to edit was not found.');
         }
 
-        return view('admin.college.edit', compact('college', 'levels', 'faculties', 'affiliations'));
+        return view('admin.college.edit', compact('college', 'levels', 'faculties'));
     }
 
     /**
@@ -119,7 +116,6 @@ class CollegeController extends Controller
             'email' => 'required',
             'faculty_id' => 'required',
             'level_id' => 'required',
-            'affiliation_id' => 'required',
         ]);
 
         $college = College::findOrFail($id);

@@ -17,6 +17,14 @@
 		    		<input type="text" name="name" id="name" placeholder="Value" class="form-control">
 		    	</div>
 		    	<div class="form-group">
+		    		<label for="affiliation_id">Affiliation</label>
+		    		<select class="form-control" name="affiliation_id" id="affiliation_id">
+		    			@foreach($affiliations as $aff)
+		    				<option value="{{$aff->id}}">{{$aff->name}}</option>
+		    			@endforeach
+		    		</select>
+		    	</div>
+		    	<div class="form-group">
 		    		<label for="description">Description</label>
 		    		<textarea name="description" id="description" placeholder="About this faculty..." class="form-control" rows="3"></textarea>
 		    	</div>
@@ -41,6 +49,7 @@
 							<tr>
 								<th>S.N</th>
 								<th width="100px">Value</th>
+								<th width="100px">Affiliation</th>
 								<th>Description</th>
 								<th width="170px">Action</th>
 							</tr>
@@ -50,6 +59,7 @@
 								<tr>
 									<td>{{ $key+1 }}</td>
 									<td>{{ $faculty->name }}</td>
+									<td>{{ $faculty->affiliation->name ?? '-' }}</td>
 									<td>{{ $faculty->description ?? '-' }}</td>
 									<td>
 										<form method="POST" action="{{ action('Admin\FacultyController@destroy', $faculty->id) }}">

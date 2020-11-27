@@ -16,6 +16,15 @@
 		    		<input type="text" name="name" id="name" placeholder="Value" class="form-control" value="{{ $faculty->name }}">
 		    	</div>
 		    	<div class="form-group">
+		    		<label for="affiliation_id">Affiliation</label>
+		    		<select class="form-control" name="affiliation_id" id="affiliation_id">
+		    			<option value="0">Select Affiliation</option>
+		    			@foreach($affiliations as $aff)
+		    				<option {{ $faculty->affiliation_id == $aff->id ? 'selected' : ''}} value="{{$aff->id}}">{{$aff->name}}</option>
+		    			@endforeach
+		    		</select>
+		    	</div>
+		    	<div class="form-group">
 		    		<label for="description">Description</label>
 		    		<textarea name="description" id="description" placeholder="About this faculty..." class="form-control" rows="3">{{ $faculty->description }}</textarea>
 		    	</div>
