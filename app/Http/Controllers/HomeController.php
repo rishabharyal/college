@@ -67,7 +67,9 @@ class HomeController extends Controller
                 $resultColleges = $resultColleges->where('level_id', $request->get('level'));
             }
             if ($request->get('affiliation')) {
-                $resultColleges->where('affiliation_id', $request->get('affiliation'));
+                $resultColleges = $resultColleges->whereHas('faculty', function($q) use ($request) {
+                    $q->where('affiliation_id', $request->get('affiliation'));
+                });
             }
             if ($request->get('text')) {
                 $resultColleges = $resultColleges->where(function($query) use ($request) {
