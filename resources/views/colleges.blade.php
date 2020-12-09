@@ -4,6 +4,20 @@
 	<h2 class="text-center">
 		All Available Colleges
 	</h2>
+	<div class="bg-info text-light p-5 text-center" style="width: 40%; margin: 0 auto">
+		<h3 class="text-center">Filter Colleges</h3>
+		<p>Filter college by overall score, placement, pass percentage, budget and rating.</p>
+		<form method="GET" action="" style="width: 250px; margin:0 auto">
+	    			<select name="filter" class="form-control" style="width: 150px; display: inline-block;">
+	    				<option {{ $filter == 'Overall' ? 'selected' : ''}} value="Overall">Overall</option>
+	    				<option {{ $filter == 'Placement' ? 'selected' : ''}} value="Placement">Placement</option>
+	    				<option {{ $filter == 'Pass' ? 'selected' : ''}} value="Pass">Pass Percentage</option>
+	    				<option {{ $filter == 'Budget' ? 'selected' : ''}} value="Budget">Budget</option>
+	    				<option {{ $filter == 'Rating' ? 'selected' : ''}} value="Rating">Rating</option>
+	    			</select>
+	    			<button class="btn btn-dark">Filter</button>
+	    		</form>
+	</div>
 	<br>
     @foreach($colleges as $college)
     	<div class="row mb-5 pb-5 bg-dark text-light pt-5">

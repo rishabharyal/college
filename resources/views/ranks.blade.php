@@ -2,7 +2,7 @@
 
 @section('content')
 	<h2 class="text-center">
-		Top Colleges
+		Top Colleges By Our Algorithm
 	</h2>
 	<p class="text-center">
 		The top college list is calculated by average of placements (50%), extra activities (20%) and pass percentage (30%).

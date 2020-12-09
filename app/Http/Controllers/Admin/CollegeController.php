@@ -7,7 +7,9 @@ use App\Models\Affiliation;
 use App\Models\College;
 use App\Models\Faculty;
 use App\Models\Level;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CollegeController extends Controller
@@ -22,7 +24,6 @@ class CollegeController extends Controller
         $levels = Level::all();
         $faculties = Faculty::all();
         $colleges = College::all();
-
 
         return view('admin.college.index', compact('levels', 'faculties', 'colleges'));
     }
@@ -77,7 +78,9 @@ class CollegeController extends Controller
      */
     public function show($id)
     {
-        //
+        $college = College::findOrfail($id);
+
+        return view('admin.college.show', compact('college'));
     }
 
     /**
@@ -129,6 +132,21 @@ class CollegeController extends Controller
         }
 
         return redirect()->back()->with('message', 'The college has been updated successfully.');
+    }
+
+    public function handleAction($collegeId, $action, $studentId) {
+        $college = College::findOrFail($collegeId);
+        $user = User::findOrFail($studentId);
+
+        if ($action == 'accept') {
+            DB::table('user_colleges')->where('user_id', $studentId)->where('college_id', $collegeId)->update([
+                'is_verified' => 1
+            ]);
+        } else {
+            DB::table('user_colleges')->where('user_id', $studentId)->where('college_id', $collegeId)->delete();
+        }
+
+        return redirect()->back()->with('message', 'Action: ' . strtoupper($action) . ' for student completed successfully.');
     }
 
     /**

@@ -66,6 +66,9 @@
                                     <a class="dropdown-item" href="/favorites">
                                         ❤️ Favorites
                                     </a>
+                                    <a class="dropdown-item" href="/me">
+                                        👤 My Profile
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

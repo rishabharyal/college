@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\College;
+use App\Models\Faculty;
+use App\Models\UserCollege;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,4 +43,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function membership() {
+        return $this->hasOne(UserCollege::class);
+    }
+
+    public function college() {
+        return $this->belongsToMany(College::class, 'user_colleges', 'user_id', 'college_id');
+    }
+
+    public function faculty() {
+        return $this->belongsToMany(Faculty::class, 'user_colleges', 'user_id', 'faculty_id');
+    }
+
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
 }

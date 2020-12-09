@@ -4,14 +4,29 @@
     <div class="row">
         <div class="offset-2 col-md-8">
             @guest
-	            <div class="alert alert-info text-center">
-	            	<h2>Please register to view the college search form.</h2>
-	            	<br>
-	            	<h5>You need to login to search college by faculty, level, affiliation, price range or marks for acceptance and scholarship. 
-	            		<br>Please
-	            		<a href="/login">login</a> or <a href="/register">register</a> to continue.
-	            	</h5>
-	            </div>
+            	<div class="card">
+	                <div class="card-header">
+	                    <strong>Search</strong>
+	                </div>
+	                <div class="card-body">
+	                    <form method="GET" action="{{ action('HomeController@index') }}">
+	                    	<div class="row">
+	                    		<div class="col-4 offset-3 form-group">
+		                            <input  value="{{ $request->get('text') }}" type="text" name="text" placeholder="By college name, location, email, phone, etc" class="form-control">
+		                        </div>
+		                        <div class="col-2 form-group">
+		                            <input type="submit" class="btn btn-success btn-block" id="search" name="search" value="Go">
+		                        </div>
+		                    </div>
+		                </form>
+		                <div class="alert alert-info text-center pb-0">
+			            	<p class="pb-0">
+			            		Note: To view advanced filter option, you need to
+			            		<a href="/login">login</a> or <a href="/register">register</a> to continue.
+			            	</p>
+			            </div>
+		            </div>
+		        </div>
             @else
 	            <div class="card">
 	                <div class="card-header">

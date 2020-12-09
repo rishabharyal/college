@@ -159,6 +159,7 @@
 										<form method="POST" action="{{ action('Admin\CollegeController@destroy', $college->id) }}">
 											@csrf
 											@method('DELETE')
+											<a href="{{ action('Admin\CollegeController@show', $college->id) }}" class="btn btn-sm btn-info">👁‍🗨 Show</a>
 											<a href="{{ action('Admin\CollegeController@edit', $college->id) }}" class="btn btn-sm btn-success">📝 Edit</a>
 											<button class="btn btn-sm btn-danger">🗑 Delete</button>
 										</form>

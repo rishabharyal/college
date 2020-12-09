@@ -27,7 +27,92 @@
 			    </p>
 			    <br>
 			    <p class="card-text">{{ $college->description }}</p>
+			    <br>
 			</div>
+			<hr>
+			<div>
+				<h3 class="text-center">Ratings</h3>
+
+				<p>
+					Average Rating: <strong>{{ intval($averageRating->average_rating) > 0 ? intval($averageRating->average_rating) : 'No ratings yet!' }}</strong>
+					<hr>
+					@if ($user  && $user->ratings()->count())
+
+						@if ($user->college()->first()->id === $college->id)
+							<div class="card mb-4">
+								<div class="card-header">
+									Add New Rating
+								</div>
+								<div class="card-body">
+									<form method="post" action="/rating">
+										@csrf
+										<input type="hidden" name="college_id" value="{{$college->id}}">
+										<select name="rating" class="form-control">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>
+										<select name="topic" class="form-control">
+											@foreach($topics as $topic)
+												<option value="{{$topic}}">{{$topic}}</option>
+											@endforeach
+										</select>
+										<button class="btn btn-info">💾</button>
+									</form>
+								</div>
+							</div>
+						@endif
+						<div class="row">
+							@foreach($user->ratings()->where('college_id', $college->id)->get() as $ur)
+								<div class="col-3 bg-dark text-light p-1">
+									<form method="post" action="/rating/{{$ur->id}}">
+										<select name="rating" class="form-control">
+											<option {{ $ur->rating_given == 1 ? 'selected' : ''}} value="1">1</option>
+											<option {{ $ur->rating_given == 2 ? 'selected' : ''}} value="2">2</option>
+											<option {{ $ur->rating_given == 3 ? 'selected' : ''}} value="3">3</option>
+											<option {{ $ur->rating_given == 4 ? 'selected' : ''}} value="4">4</option>
+											<option {{ $ur->rating_given == 5 ? 'selected' : ''}} value="5">5</option>
+										</select>
+										<select name="topic" class="form-control">
+											@foreach($topics as $topic)
+												<option {{ $ur->topic == $topic ? 'selected' : ''}} value="{{$topic}}">{{$topic}}</option>
+											@endforeach
+										</select>
+										<button class="btn btn-info">💾</button>
+										<a href="/rating/{{$ur->id}}/delete" class="btn btn-danger">🗑</a>
+									</form>
+								</div>
+								
+							@endforeach
+						</div>
+					@endif
+
+					@if($ratingByTopic->count())
+						Ratings By Topic:
+						<br>
+						@foreach($ratingByTopic as $topic)
+							<span>{{ $topic->topic . ': ' . round($topic->average_rating) }} </span> <br>
+						@endforeach
+
+						<div class="row">
+							@foreach($allRatings as $rating)
+								<div class="col-3 bg-dark text-light m-1">
+									{{ $rating->user->name }}<br>
+									{{ $rating->topic }}<br>
+									{{ $rating->rating_given }}<br>
+								</div>
+							@endforeach
+						</div>
+
+
+					@endif
+				</p>
+			</div>
+
+
+			
     	</div>
         <div class="offset-2 col-md-8">
         	<br>
