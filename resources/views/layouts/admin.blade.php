@@ -81,7 +81,11 @@
                 <div class="col-1 offset-2">
                     <nav class="nav flex-column">
                       <a class="nav-link" href="/admin/">Dashboard</a>
-                      <a class="nav-link" href="/admin/users">Users</a>
+                      @if(Auth::user()->is_admin === 2)
+                        <a class="nav-link" href="/admin/users">Users</a>
+                      @else
+                        <a class="nav-link" href="/admin/users/{{Auth::id()}}/edit">Edit Myself</a>
+                      @endif
                       <a class="nav-link" href="/admin/affiliations">Affiliations</a>
                       <a class="nav-link" href="/admin/levels">Levels</a>
                       <a class="nav-link" href="/admin/faculties">Faculties</a>

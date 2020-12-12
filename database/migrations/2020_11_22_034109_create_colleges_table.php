@@ -20,7 +20,7 @@ class CreateCollegesTable extends Migration
             $table->unsignedBigInteger('faculty_id');
             $table->string('name')->nullable();
             $table->string('location')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('logo')->nullable();
             $table->decimal('minimim_acceptance_percentage')->nullable();
             $table->decimal('minimum_scholarship_percentage')->nullable();

@@ -58,7 +58,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @if(Auth::user()->is_admin)
+                                    @if(Auth::user()->is_admin > 0)
                                         <a class="dropdown-item text-success text-bold" href="/admin">
                                             <strong>➡️ Open Admin Panel</strong>
                                         </a>

@@ -36,9 +36,7 @@
 				<p>
 					Average Rating: <strong>{{ intval($averageRating->average_rating) > 0 ? intval($averageRating->average_rating) : 'No ratings yet!' }}</strong>
 					<hr>
-					@if ($user  && $user->ratings()->count())
-
-						@if ($user->college()->first()->id === $college->id)
+					@if ($user && $user->college()->first() && $user->college()->first()->id === $college->id)
 							<div class="card mb-4">
 								<div class="card-header">
 									Add New Rating
@@ -64,10 +62,12 @@
 								</div>
 							</div>
 						@endif
+					@if ($user && $user->ratings()->count())
 						<div class="row">
 							@foreach($user->ratings()->where('college_id', $college->id)->get() as $ur)
 								<div class="col-3 bg-dark text-light p-1">
 									<form method="post" action="/rating/{{$ur->id}}">
+										@csrf
 										<select name="rating" class="form-control">
 											<option {{ $ur->rating_given == 1 ? 'selected' : ''}} value="1">1</option>
 											<option {{ $ur->rating_given == 2 ? 'selected' : ''}} value="2">2</option>
@@ -105,8 +105,6 @@
 								</div>
 							@endforeach
 						</div>
-
-
 					@endif
 				</p>
 			</div>
@@ -118,9 +116,12 @@
         	<br>
         	<br>
         	<hr>
-        	<h2 class="text-center">Other Colleges</h2>
+        	<h2 class="text-center">Similar Colleges</h2>
+        	<p class="text-center">
+        		Similar colleges are calculated by college description, faculty, level and address using consine similarity.
+        	</p>
         	<div class="row">
-        		@foreach($colleges as $college)
+        		@foreach($similarColleges as $college)
         			<div class="col-4 mt-5">
         				<div class="card border-success mb-3">
 						  <div class="card-header text-center pt-3">

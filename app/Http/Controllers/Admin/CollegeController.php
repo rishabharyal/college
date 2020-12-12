@@ -9,6 +9,7 @@ use App\Models\Faculty;
 use App\Models\Level;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,7 +24,13 @@ class CollegeController extends Controller
     {
         $levels = Level::all();
         $faculties = Faculty::all();
-        $colleges = College::all();
+        $colleges = new College();
+
+        if (Auth::user()->is_admin === 1) {
+            $colleges = $colleges->where('user_id', Auth::id());
+        }
+
+        $colleges = $colleges->get();
 
         return view('admin.college.index', compact('levels', 'faculties', 'colleges'));
     }
@@ -65,6 +72,7 @@ class CollegeController extends Controller
         $path = $request->file('logo')->store('public/logo');
 
         $college->logo = $path;
+        $college->user_id = Auth::id();
         $college->save();
 
         return redirect()->back()->with('message', 'The college has been entered successfully.');

@@ -9,19 +9,24 @@ use App\Models\Favorite;
 use App\Models\Level;
 use App\Models\Rating;
 use App\Models\UserCollege;
+use App\Services\Cosine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+
+    private $cosine;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+
+    public function __construct(Cosine $cosine)
     {
+        $this->cosine = $cosine;
     }
 
     public function rankColleges() {
@@ -30,9 +35,47 @@ class HomeController extends Controller
         return view('ranks', compact('colleges'));
     }
 
+    private function getSimilarCollege($id, $description) {
+        $otherColleges = College::where('id', '!=', $id)->orderBy('name', 'DESC')->get();
+        $mostSimilar = [];
+        foreach ($otherColleges as $key => $college) {
+            $similarity = $this->cosine->calculate($description, $college->description . ' ' .$college->description . ' ' . $college->faculty->name . ' ' . $college->location . ' ' . $college->level);
+            if ($mostSimilar === []) {
+                $mostSimilar[0] = [$similarity, $college];
+            } else {
+                if ($mostSimilar[0][0] <= $similarity) {
+                    array_unshift($mostSimilar, [$similarity, $college]);
+                    array_pop($mostSimilar);
+                    continue;
+                }
+                if (!isset($mostSimilar[1])) {
+                    $mostSimilar[1] = [$similarity, $college];
+                    continue;
+                }
+                if ($mostSimilar[1][0] <= $similarity) {
+                    $temp = $mostSimilar[1];
+                    $mostSimilar[1] = [$similarity, $college];
+                    $mostSimilar[2] = $temp;
+                    continue;
+                }
+                if (!isset($mostSimilar[2])) {
+                    $mostSimilar[2] = [$similarity, $college];
+                    continue;
+                }
+
+                if ($mostSimilar[2][0] <= $similarity) {
+                    $mostSimilar[2] = [$similarity, $college];
+                }
+            }
+        }
+
+        return array_map(function($item) {
+            return $item[1];
+        }, $mostSimilar);
+    }
+
     public function showCollege($id) {
         $college = College::findOrFail($id);
-        $colleges = College::where('id', '!=', $id)->take(3)->inRandomOrder()->get();
 
         $myRatings = null;
         $allRatings = new Rating();
@@ -49,6 +92,8 @@ class HomeController extends Controller
             $allRatings = $allRatings->where('user_id', '!=', Auth::id())->where('college_id', $id);
         }
 
+        $similarColleges = $this->getSimilarCollege($college->id, $college->description . ' ' . $college->faculty->name . ' ' . $college->location . ' ' . $college->level);
+
         $allRatings = $allRatings->where('college_id', $id)->get();
         $topics = [
             'Budget',
@@ -57,13 +102,13 @@ class HomeController extends Controller
             'Practicals'
         ];
 
-        if (Auth::user()) {
+        if (Auth::user() && Auth::user()->faculty()->first()) {
             $topics[Auth::user()->faculty()->first()->name] = Auth::user()->faculty()->first()->name;
         }
 
         $user = Auth::user();
 
-        return view('college', compact('college', 'colleges', 'favorite', 'myRatings', 'allRatings', 'ratingByTopic', 'averageRating', 'user', 'topics'));
+        return view('college', compact('college', 'similarColleges', 'favorite', 'myRatings', 'allRatings', 'ratingByTopic', 'averageRating', 'user', 'topics'));
     }
 
     public function showAllColleges(Request $request) {
@@ -75,7 +120,7 @@ class HomeController extends Controller
         }  elseif ($filter == 'Pass') {
             $colleges = College::orderBy('pass_percent', 'DESC')->get();
         } elseif ($filter == 'Rating') {
-            $collegeIds = Rating::selectRaw('college_id, SUM(RATING_GIVEN) as rating')->groupBy('college_id')->orderByRaw('rating DESC')->get()->pluck('college_id')->toArray();
+            $collegeIds = Rating::selectRaw('college_id, SUM(RATING_GIVEN)/COUNT(RATING_GIVEN) as rating')->groupBy('college_id')->orderByRaw('rating DESC')->get()->pluck('college_id')->toArray();
             $colleges = collect();
             foreach ($collegeIds as $id) {
                 $colleges->push(College::find($id));

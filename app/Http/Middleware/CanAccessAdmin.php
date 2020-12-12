@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class CanAccessAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class AdminMiddleware
         if (!Auth::check()) {
             return redirect('/login');
         }
-        if (Auth::user()->is_admin === 2) {
+        if (Auth::user()->is_admin != 0) {
             return $next($request);
         }
         

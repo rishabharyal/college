@@ -59,7 +59,7 @@
 		  				<tr>
 		  					<td>{{ $key+1 }}</td>
 		  					<td>{{ $rating->user->name}}</td>
-		  					<td>{{ $rating->user->faculty()->first()->name}}</td>
+		  					<td>{{ $rating->user->faculty()->first() ? $rating->user->faculty()->first()->name : 'Ex-Student'}}</td>
 		  					<td>{{ $rating->topic }}</td>
 		  					<td>{{ $rating->rating_given }} of 5</td>
 		  				</tr>

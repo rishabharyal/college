@@ -29,7 +29,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::namespace('Admin')->middleware('admin')->prefix('admin')->group(function() {
+Route::namespace('Admin')->middleware(['can.access.admin'])->prefix('admin')->group(function() {
 	Route::get('/college/{collegeId}/{action}/student/{studentId}', 'CollegeController@handleAction');
 	Route::get('/', 'AdminController@index');
 	Route::resource('users', 'UserController');

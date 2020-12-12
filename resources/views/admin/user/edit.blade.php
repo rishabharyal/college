@@ -23,13 +23,18 @@
 		    		<label for="name">Password</label>
 		    		<input type="password" name="password" id="password" placeholder="password" class="form-control">
 		    	</div>
-		    	<div class="form-group">
-		    		<label for="is_admin">User Type</label>
-		    		<select name="is_admin" id="is_admin" class="form-control">
-		    			<option {{ !$user->is_admin ? 'selected' : ''}} value="0">Standard</option>
-		    			<option {{ $user->is_admin ? 'selected' : ''}} value="1">Admin</option>
-		    		</select>
-		    	</div>
+		    	@if(Auth::user()->is_admin === 2)
+		    		<div class="form-group">
+			    		<label for="is_admin">User Type</label>
+			    		<select name="is_admin" id="is_admin" class="form-control">
+			    			<option {{ !$user->is_admin ? 'selected' : ''}} value="0">Standard</option>
+			    			<option {{ $user->is_admin == 1 ? 'selected' : ''}} value="1">College (Admin)</option>
+			    			<option {{ $user->is_admin == 2 ? 'selected' : ''}} value="2">Super Admin</option>
+			    		</select>
+			    	</div>
+		    	@else
+		    		<input type="hidden" name="is_admin" value="1">
+		    	@endif
 		    	<div class="form-group text-right">
 		    		<button class="btn btn-success">Update User</button>
 		    	</div>
