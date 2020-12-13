@@ -89,12 +89,20 @@
 		                        </div>
 		                    </div>
 	                    </form>
-	                    @if($request->has('search') && $resultColleges)
-	                    	<hr>
-	                    	<h5 class="text-center">Search Results ({{ $resultColleges->count() }})</h5>
+	                </div>
+	            </div>
+            @endguest
+        </div>
+        @if($request->has('search') && $resultColleges)
+	          	<div class="offset-2 col-md-8 mt-3">
+	          		<div class="card">
+	          			<div class="card-header mb-0 pb-0">
+	          				<p class="text-center">Search Results ({{ $resultColleges->count() }})</p>
+	          			</div>
+	          			<div class="card-body">
 	                    	@if ($resultColleges->count()>0)
                     			@foreach($resultColleges as $college)
-                    				<div class="row pt-2 mb-2 pb-2" style="background: #EEE">
+                    				<div class="row pt-2" style="background: #EEE">
                     					<div class="col-1">
 	                    					<img src="{{ Storage::url($college->logo) }}" width="100%;">
 	                    				</div>
@@ -119,11 +127,10 @@
 	                    			No search results found for the query above.
 	                    		</div>
 	                    	@endif
-	                    @endif
-	                </div>
-	            </div>
-            @endguest
-        </div>
+	          			</div>
+	          		</div>
+	          	</div>
+	    @endif
         <div class="offset-2 col-md-8 pt-5">
         	<h2 class="text-center">Available Colleges</h2>
         	<div class="row">

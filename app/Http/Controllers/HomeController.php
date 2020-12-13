@@ -228,6 +228,7 @@ class HomeController extends Controller
             $resultColleges = $resultColleges->get();
         }
 
+
         return view('home', compact('levels', 'affiliations', 'faculties', 'colleges', 'locations', 'request', 'resultColleges'));
     }
 }
