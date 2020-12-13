@@ -145,7 +145,7 @@
 						  		<a href="/college/{{$college->id}}">{{ $college->name }}</a>
 						  	</h2>
 						  </div>
-						  <div class="card-body text-success">
+						  <div class="card-body">
 						    <ul>
 						    	<li>{{ $college->affiliation->name }}</li>
 						    	<li>{{ $college->level->name }}</li>
@@ -158,7 +158,7 @@
 								<br>
 								📨 <a href="mailto:{{ $college->email }}" target="_new">{{ $college->email }}</a>
 						    </p>
-						    <p class="card-text">{{ $college->description }}</p>
+						    <p class="card-text">{{ substr($college->description, 0, 250) }}...</p>
 						  </div>
 						</div>
         			</div>

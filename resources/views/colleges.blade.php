@@ -42,7 +42,7 @@
 						📨 <a href="mailto:{{ $college->email }}" target="_new">{{ $college->email }}</a>
 				    </p>
 				    <br>
-				    <p class="card-text">{{ $college->description }}</p>
+				    <p class="card-text">{{ substr($college->description, 0, 500) }}</p>
 				</div>
 	    	</div>
 	    </div>
