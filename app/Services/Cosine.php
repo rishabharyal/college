@@ -9,7 +9,7 @@ class Cosine {
 		'is', 'am', 'are'
 	];
 	private $specialChars = [
-		'?', '!', '.', '-', '_'
+		'?', '!', '.', '-', '_', ','
 	];
 	public function calculate($mainString, $compareString) {
 		$wordsWithCount = $this->getWordCountByString($mainString); 
@@ -26,13 +26,13 @@ class Cosine {
 				$tuple[1] = $secondStringWithCount[$word];
 				unset($secondStringWithCount[$word]);
 			}
-			$allWordsWithCountsForBothStrings[] = $tuple;
+			$allWordsWithCountsForBothStrings[$word] = $tuple;
 		}
 
 		foreach ($secondStringWithCount as $word => $count) {
 			$tuple[0] = 0;
 			$tuple[1] = $count;
-			$allWordsWithCountsForBothStrings[] = $tuple;
+			$allWordsWithCountsForBothStrings[$word] = $tuple;
 		}
 
 		$vectorProduct = $this->calculateVectorProduct($allWordsWithCountsForBothStrings); // this is x.y

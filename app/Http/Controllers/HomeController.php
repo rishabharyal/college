@@ -39,7 +39,7 @@ class HomeController extends Controller
         $otherColleges = College::where('id', '!=', $id)->orderBy('name', 'DESC')->get();
         $mostSimilar = [];
         foreach ($otherColleges as $key => $college) {
-            $similarity = $this->cosine->calculate($description, $college->description . ' ' .$college->description . ' ' . $college->faculty->name . ' ' . $college->location . ' ' . $college->level);
+            $similarity = $this->cosine->calculate($description, $college->description . ' ' .$college->description . ' ' . $college->faculty->name . ' ' . $college->location . ' ' . $college->level->name);
             if ($mostSimilar === []) {
                 $mostSimilar[0] = [$similarity, $college];
             } else {
@@ -92,7 +92,7 @@ class HomeController extends Controller
             $allRatings = $allRatings->where('user_id', '!=', Auth::id())->where('college_id', $id);
         }
 
-        $similarColleges = $this->getSimilarCollege($college->id, $college->description . ' ' . $college->faculty->name . ' ' . $college->location . ' ' . $college->level);
+        $similarColleges = $this->getSimilarCollege($college->id, $college->description . ' ' . $college->faculty->name . ' ' . $college->location . ' ' . $college->level->name);
 
         $allRatings = $allRatings->where('college_id', $id)->get();
         $topics = [
