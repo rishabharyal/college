@@ -195,7 +195,7 @@ class HomeController extends Controller
         $affiliations = Affiliation::all();
         $faculties = Faculty::all();
         $colleges = College::take(6)->get();
-        $locations = College::distinct('location')->pluck('location');
+        $locations = College::distinct('city')->pluck('city');
         $resultColleges = null;
         if ($request->has('search')) {
             $resultColleges = new College();
@@ -218,7 +218,7 @@ class HomeController extends Controller
             }
 
             if ($request->get('location')) {
-                $resultColleges = $resultColleges->where('location', 'LIKE',  '%' . $request->get('location') . '%');
+                $resultColleges = $resultColleges->where('city', 'LIKE',  '%' . $request->get('location') . '%');
             }
 
             if ($request->get('start_fee') && $request->get('end_fee')) {

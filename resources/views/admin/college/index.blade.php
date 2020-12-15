@@ -15,13 +15,19 @@
 		    	<div class="row">
 		    		<div class="col-6">
 		    			<div class="form-group">
-			    		<label for="name">Name</label>
-			    		<input type="text" name="name" id="name" placeholder="Value" class="form-control">
-			    	</div>
+				    		<label for="name">Name</label>
+				    		<input type="text" name="name" id="name" placeholder="Value" class="form-control">
+				    	</div>
 		    		</div>
 		    		<div class="col-6">
 		    			<div class="form-group">
-				    		<label for="name">Location</label>
+				    		<label for="city">City</label>
+				    		<input type="text" name="city" id="city" placeholder="Eg: Kathmandu" class="form-control">
+				    	</div>
+		    		</div>
+		    		<div class="col-6">
+		    			<div class="form-group">
+				    		<label for="location">Location</label>
 				    		<input type="text" name="location" id="location" placeholder="Eg: Baneshwor" class="form-control">
 				    	</div>
 		    		</div>
