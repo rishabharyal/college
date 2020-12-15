@@ -153,7 +153,7 @@ class HomeController extends Controller
         $user->name = $request->get('name');
         $user->email = $request->get('email');
 
-        if (strlen($request->has('password') >= 9) ) {
+        if (strlen($request->get('password')) >= 9) {
             $user->password = bcrypt($request->get('password'));
         }
 

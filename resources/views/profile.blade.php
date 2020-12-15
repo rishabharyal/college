@@ -24,7 +24,7 @@
 							</div>
 							<div class="form-group">
 								<label for="password">Password (leave empty if you don't want to change)</label>
-								<input type="text" name="password" class="form-control">
+								<input type="password" name="password" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="college">College</label>
